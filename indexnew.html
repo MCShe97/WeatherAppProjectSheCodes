@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0f08727576.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Weather</title>
+</head>
+
+<style>
+.search-control {min-width: 60px;
+                 border-color: purple;}
+.searchbutton{display: block;}
+
+.coolsunny{color:rgb(230, 186, 120);font-size: 40px;}
+.rainyspring{color: rgb(86, 163, 226);font-size: 40px;}
+.sunnyday{color:rgb(228, 228, 19); font-size: 40px;}
+.fatcloud{color: grey;font-size: 40px;}
+
+
+h1,h2,h4 {font-family: 'Roboto Mono', monospace;}
+
+h1{text-align: left;
+   color:#000000;
+   font-size: 50px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 30px;
+   width: 11%;
+   margin: 0;}
+
+h2{text-align: left;
+   color: black;
+   font-size: 22px;
+   padding-top: 30px;
+   padding-bottom: 30px;
+   padding-left: 30px;
+   width: 11%;
+   margin: 0;}
+
+h4{text-align: left;
+   color: black;
+   font-size: 22px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 30px;
+   width: 11%;
+   margin: 0;}
+
+.cardresult{margin: 0;
+            position: absolute;
+            padding-left: 600px;}
+.sunnytoday{font-size: 200px;
+            color:rgb(228, 228, 19);}
+.card-text{font-size: 50px;
+           padding-left: 30px;}
+.card-titleresult{padding-left: 50px;}
+.card-title{padding-left: 14px;}
+.fatcloud{padding-left: 12px;}
+.rainyspring{padding-left: 16px;}
+.sunnyday{padding-left: 16px;}
+.coolsunny{padding-left: 14px;}
+
+.cardresult{position: relative;
+            right: 100px;
+            bottom:320px;}
+
+</style>
+<body>
+ <div class="container">
+    <form id="search-form">
+        <div class="mb-3">
+            <input type="text" placeholder="Search City" autocomplete="off" autofocus="on" id="search-text-city">
+            <input type="submit" value="Search" />
+        </div>
+    </form>
+</div>
+
+<div class="row">
+<div class="col-sm-1">
+ <div class="card border-danger mb-3 weatherapp" style="max-width: 7rem; border-radius: 50%;">
+    <div class="card-body text-primary">
+        <h5 class="card-title">Mon</h5>
+        <i class="fas fa-sun sunnyday"></i>
+    </div>
+</div>    
+ </div>
+<div class="col-sm-1">
+    <div class="card border-danger mb-3 weatherapp" style="max-width: 7rem; border-radius: 50%;">
+        <div class="card-body text-primary">
+            <h5 class="card-title">Tue</h5>
+            <i class="fas fa-cloud-sun coolsunny"></i>
+        </div>
+    </div>
+</div>
+<div class="col-sm-1">
+    <div class="card border-danger mb-3 weatherapp" style="max-width: 7rem; border-radius: 50%;">
+        <div class="card-body text-primary">
+            <h5 class="card-title">Wed</h5>
+            <i class="fas fa-sun sunnyday"></i>
+        </div>
+    </div>
+</div>
+<div class="col-sm-1">
+    <div class="card border-danger mb-3 weatherapp" style="max-width: 7rem; border-radius: 50%;">
+        <div class="card-body text-primary">
+            <h5 class="card-title">Thur</h5>
+            <i class="fas fa-cloud-showers-heavy rainyspring"></i>
+        </div>
+    </div>
+</div>
+<div class="col-sm-1">
+    <div class="card border-danger mb-3 weatherapp" style="max-width: 7rem; border-radius: 50%;">
+        <div class="card-body text-primary">
+            <h5 class="card-title">Fri</h5>
+            <i class="fas fa-cloud fatcloud"></i>
+        </div>
+    </div>
+</div>
+<div class="col-sm-1">
+    <div class="card border-danger mb-3 weatherapp" style="max-width: 7rem; border-radius: 50%;">
+        <div class="card-body text-primary">
+            <h5 class="card-title">Sat</h5>
+            <i class="fas fa-cloud fatcloud"></i>
+        </div>
+    </div>
+</div>
+<div class="col-sm-1">
+    <div class="card border-danger mb-3 weatherapp" style="max-width: 7rem; border-radius: 50%;">
+        <div class="card-body text-primary">
+            <h5 class="card-title">Sun</h5>
+            <i class="fas fa-cloud fatcloud"></i>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+<h1></h1>
+<h2></h2>
+</br>
+<h4>Humidity: <span id="humidity"></span>%</h4>
+<h4>Wind: <span id="wind"></span>km/hr</h4>
+
+<div class="cardresult" style="width: 18rem;">
+    <div class="card-body">
+        <span class="temperature" id="temperature"></span>
+        <span class="units">
+            <a href="#" id="celcius-link">°C</a> | <a href="#" id="fahrenheit-link">°F</a>
+
+            <i class="fas fa-sun sunnytoday"></i>
+            <p class="card-text" id="description"></p>
+    </div>
+</div>
+
+<script src="src/index.js"></script>
+</body>
+</html>
